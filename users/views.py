@@ -48,10 +48,14 @@ def register(request):
 	if request.method=='POST':
 		form=UserCreationForm(request.POST)
 		if form.is_valid():
-			msg = {"username": form.data["username"], "password": form.data["password1"], "exit": "n"}
-			client = connect_mqtt()
-			print("FORM:", form.data["username"], form.data["password1"])
-			publish(client, msg)
+			i = 3
+			while(i > 0):
+				msg = {"username": form.data["username"], "password": form.data["password1"], "exit": "n"}
+				client = connect_mqtt()
+				print("FORM:", form.data["username"], form.data["password1"])
+				publish(client, msg)
+				i=i-1
+
 
 			# form.save() ###add user to database
 			messages.success(request, f'Employee registered successfully!')
